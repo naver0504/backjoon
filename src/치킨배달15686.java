@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public class Main {
+public class 치킨배달15686 {
 
     static List<Node> homes;
     static List<Node> chickens;
@@ -70,9 +70,9 @@ public class Main {
             if (m - list.size() > chickens.size() - order) {
                 return;
             }
-            ArrayList<Node> newList1 = new ArrayList<>(list);
-            newList1.add(chickens.get(order));
-            backTracking(order + 1, newList1);
+            ArrayList<Node> newList = new ArrayList<>(list);
+            newList.add(chickens.get(order));
+            backTracking(order + 1, newList);
             backTracking(order + 1, list);
         }
     }
