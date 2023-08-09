@@ -39,6 +39,7 @@ public class 주식11501 {
                     max = integer;
                 }
                 else {
+
                     tmpSum += integer;
                     length++;
                 }
