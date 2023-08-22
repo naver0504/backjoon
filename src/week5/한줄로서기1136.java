@@ -12,6 +12,7 @@ public class 한줄로서기1136 {
     static int[] person;
     public static void main(String[] args) throws IOException {
 
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
 
