@@ -28,11 +28,9 @@ public class 주사위굴리기2_23288 {
     static int[][] map;
     static int N;
     static int M;
-    static int K;
     static int X = 0;
     static int Y = 0;
     static int dir = 0;
-    static int result = 0;
 
 
     public static void main(String[] args) throws IOException {
@@ -40,7 +38,7 @@ public class 주사위굴리기2_23288 {
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        K = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
 
         map = new int[N][M];
 
@@ -51,13 +49,14 @@ public class 주사위굴리기2_23288 {
             }
         }
 
+        int result = 0;
         for (int i = 0; i < K; i++) {
-            rollDice();
+            result += rollDice();
         }
         System.out.println(result);
     }
 
-    private static void rollDice() {
+    private static int rollDice() {
 
         int ndx = X + idx[dir];
         int ndy = Y + idy[dir];
@@ -75,8 +74,6 @@ public class 주사위굴리기2_23288 {
         queue.add(new Pair(X, Y));
         int[][] visited = new int[N][M];
         visited[X][Y] = 1;
-
-        int m = map[X][Y];
         int c = 1;
         while (!queue.isEmpty()) {
             Pair pair = queue.poll();
@@ -87,7 +84,7 @@ public class 주사위굴리기2_23288 {
                 int nextY = y + idy[i];
                 if (nextX < 0 || nextY < 0 || nextX >= N || nextY >= M)  continue;
                 if(visited[nextX][nextY] == 1) continue;
-                if (map[nextX][nextY] == m) {
+                if (map[nextX][nextY] == map[X][Y]) {
                     queue.add(new Pair(nextX, nextY));
                     c++;
                     visited[nextX][nextY] = 1;
@@ -95,62 +92,44 @@ public class 주사위굴리기2_23288 {
             }
         }
 
-        result += m * c;
-
         if (dice[5] > map[X][Y]) {
             setDirection(1);
         } else if (dice[5] < map[X][Y]) {
             setDirection(-1);
         }
 
-
+        return map[X][Y] * c;
     }
 
     private static void setDice(int dir) {
         switch (dir) {
             case 0 -> {
-                int left = dice[1];
-                int up = dice[2];
                 int right = dice[3];
-                int bottom = dice[5];
-
-                dice[1] = bottom;
-                dice[2] = left;
-                dice[3] = up;
+                dice[3] = dice[2];
+                dice[2] = dice[1];
+                dice[1] = dice[5];
                 dice[5] = right;
             }
             case 1 -> {
-                int front = dice[0];
-                int up = dice[2];
                 int back = dice[4];
-                int bottom = dice[5];
-
-                dice[0] = bottom;
-                dice[2] = front;
-                dice[4] = up;
+                dice[4] = dice[2];
+                dice[2] = dice[0];
+                dice[0] = dice[5];
                 dice[5] = back;
             }
             case 2 -> {
                 int left = dice[1];
-                int up = dice[2];
-                int right = dice[3];
-                int bottom = dice[5];
-
-                dice[1] = up;
-                dice[2] = right;
-                dice[3] = bottom;
+                dice[1] = dice[2];
+                dice[2] = dice[3];
+                dice[3] = dice[5];
                 dice[5] = left;
             }
 
             case 3 -> {
                 int front = dice[0];
-                int up = dice[2];
-                int back = dice[4];
-                int bottom = dice[5];
-
-                dice[0] = up;
-                dice[2] = back;
-                dice[4] = bottom;
+                dice[0] = dice[2];
+                dice[2] = dice[4];
+                dice[4] = dice[5];
                 dice[5] = front;
             }
         }
