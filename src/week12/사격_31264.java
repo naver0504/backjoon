@@ -14,7 +14,7 @@ public class 사격_31264 {
     static int N;
     static int M;
     static int A;
-    static int max = 0;
+    static int[] s;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -24,35 +24,52 @@ public class 사격_31264 {
         A = Integer.parseInt(st.nextToken());
         st = new StringTokenizer(br.readLine());
 
-        Set<Integer> set = new HashSet<>();
+
+        s = new int[N];
         for (int i = 0; i < N; i++) {
-            int input = Integer.parseInt(st.nextToken());
-            set.add(input);
-            max = Math.max(max, input);
+            s[i] = Integer.parseInt(st.nextToken());
         }
 
-        for (int i = 1; i <= max; i++) {
-            int currentPoint = i;
-            for (int j = 0; j < M && currentPoint - i < A; j++) {
-                if (set.contains(currentPoint)) {
-                    currentPoint += currentPoint;
-                } else {
-                    int tmp = currentPoint;
-                    while (--tmp > 0) {
-                        if (max < tmp) tmp = max;
-                        if (set.contains(tmp)) {
-                            currentPoint += tmp;
-                            break;
-                        }
-                    }
-                }
-            }
+        Arrays.sort(s);
+        int start = 0;
+        int end = s[N - 1];
 
-            if (currentPoint  - i >= A) {
-                System.out.println(i);
-                break;
+        while (start + 1 <  end) {
+            int mid = (start + end) / 2;
+            if (isPossible(mid)) {
+                end = mid;
+            } else {
+                start = mid;
             }
         }
+
+        System.out.println(end);
+
+
+
+    }
+
+    private static boolean isPossible(int ability) {
+        int idx = 0;
+        while (idx + 1 < N && s[idx+1] <= ability) {
+            idx++;
+        }
+
+        if (ability < s[idx]) {
+            return false;
+        }
+
+        long currentA = 0;
+        for (int i = 0; i < M; i++) {
+            currentA += s[idx];
+            ability += s[idx];
+
+            while (idx + 1 < N && s[idx+1] <= ability) {
+                idx++;
+            }
+
+        }
+        return currentA >= A;
     }
 
 }
