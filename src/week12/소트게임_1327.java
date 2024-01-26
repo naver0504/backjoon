@@ -33,7 +33,7 @@ public class 소트게임_1327 {
         String line = br.readLine().replaceAll(" ", "");
 
         set = new HashSet<>();
-        dfs(line);
+        bfs(line);
         if (min == Integer.MAX_VALUE) {
             System.out.println(-1);
         } else {
@@ -41,7 +41,7 @@ public class 소트게임_1327 {
         }
     }
 
-    private static void dfs(String s) {
+    private static void bfs(String s) {
 
         Queue<Node> queue = new LinkedList<>();
 
