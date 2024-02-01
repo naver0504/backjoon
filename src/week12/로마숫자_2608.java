@@ -127,7 +127,6 @@ public class 로마숫자_2608 {
     }
 
     private static int getNumber(String first) {
-        int vldCount = 0;
 
         int result = 0;
         for (int i = 0; i < first.length(); i++) {
