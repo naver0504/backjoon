@@ -49,7 +49,6 @@ class 도넛과막대그래프 {
         }
 
         int ans0 = 0;
-        int ans1 = 0;
         int ans2 = 0;
         int ans3 = 0;
 
