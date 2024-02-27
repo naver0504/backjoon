@@ -9,6 +9,14 @@ public class 미로탈출명령어 {
 
         int n;
         int m;
+        int k;
+        int r;
+        int c;
+
+        StringBuilder sb = new StringBuilder();
+        String answer;
+
+
 
         int[] idx = {1, 0, 0, -1};
         int[] idy = {0, -1, 1, 0};
@@ -28,49 +36,45 @@ public class 미로탈출명령어 {
             }
         }
 
+        private void dfs(int depth, int x, int y) {
+            if(depth == k ) {
+                if(x == r && y == c && answer == null) answer = sb.toString();
+                return;
+            }
+
+            int difX = Math.abs(r - x);
+            int difY = Math.abs(c - y);
+
+            if(answer != null) return;
+            if(k-depth < difX + difY) return;
+            if(((k - depth) - (difX + difY)) % 2 != 0) return;
+
+            for(int i = 0; i< 4; i++) {
+                int ndx = x + idx[i];
+                int ndy = y + idy[i];
+                if(!rangeCheck(ndx, ndy)) continue;
+                sb.append(str[i]);
+                dfs(depth + 1 , ndx, ndy);
+                sb.delete(depth, depth + 1);
+            }
+
+            return;
+
+        }
+
         public String solution(int n, int m, int x, int y, int r, int c, int k) {
             this.n = n;
             this.m = m;
+            this.k = k;
+            this.r = r;
+            this.c = c;
+            int difX = Math.abs(r - x);
+            int difY = Math.abs(c - y);
+            if((k - (difX + difY)) % 2 != 0) return "impossible";
 
+            dfs(0, x, y);
 
-            Queue<Node> queue = new LinkedList<>();
-            queue.offer(new Node(x, y, ""));
-
-            if(Math.abs(r- x) + Math.abs(c - y) > k) return "impossible";
-            if((k - Math.abs(r- x) + Math.abs(c - y)) % 2 != 0 ) return "impossible";
-
-            while(!queue.isEmpty()) {
-                Node poll = queue.poll();
-                String route = poll.route;
-                int length = route.length();
-
-                int difX = Math.abs(r- poll.x);
-                int difY = Math.abs(c- poll.y);
-                if(k - length < difX + difY) continue;
-                if(((k - length) - (difX + difY)) % 2 != 0) continue;
-
-                for(int i = 0; i< 4; i++) {
-                    int ndx = poll.x + idx[i];
-                    int ndy = poll.y + idy[i];
-
-
-
-                    if(!rangeCheck(ndx, ndy)) continue;
-
-
-
-
-                    if(length + 1 == k && ndx == r && ndy == c) {
-                        return route + str[i];
-                    } else {
-                        queue.offer(new Node(ndx, ndy, route + str[i]));
-                    }
-
-                }
-            }
-
-
-            return "impossible";
+            return answer != null? answer : "impossible";
         }
 
         private boolean rangeCheck(int x, int y) {
