@@ -15,9 +15,8 @@ public class 거리두기확인하기 {
             for (String[] place : places) {
                 boolean flag = false;
                 char[][] map = new char[5][5];
-                String[] lines = place;
                 for (int j = 0; j < 5; j++) {
-                    String line = lines[j];
+                    String line = place[j];
                     for (int k = 0; k < 5; k++) {
                         char c = line.charAt(k);
                         map[j][k] = c;
