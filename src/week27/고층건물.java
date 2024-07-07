@@ -26,7 +26,7 @@ public class 고층건물 {
         for (int i = 0; i < N - 1; i++) {
             double curMax = Integer.MIN_VALUE;
             for (int j = i + 1; j < N; j++) {
-                double cur = (double) (buildings[j] - buildings[i]) /(j - i);
+                double cur = ((double) (buildings[j] - buildings[i])) /(j - i);
                 if (cur > curMax) {
                     curMax = cur;
                     answers[i]++;
